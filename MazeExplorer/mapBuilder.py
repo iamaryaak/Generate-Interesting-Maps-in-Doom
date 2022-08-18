@@ -1,7 +1,7 @@
 from omg import *
 from maze import *
 from wad import *
-import numpy
+import numpy as np
 import cma
 
 # Global Variables
@@ -28,19 +28,14 @@ def print_map(board):
 
 # make sure to add floor/ceiling
 def create_map():
-	# create clear map 11x11
-	base_map = [[WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL],
-		[WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL]]
+	# create clear map any size (square map to begin with)
+	# TODO: create any type of maps
+	w = 10
+	h = 10
+	base_map = [[EMPTY for x in range(w)] for y in range(h)] 
 	
+	# add border around the map
+	x = np.pad(x, pad_width=1, mode='constant', constant_values=WALL)
 	print_map(base_map)
 
 	nodes = []
@@ -90,7 +85,7 @@ def create_map():
 	print_map(base_map)
 
 	# save map as a .txt file
-	with open('testMap1.txt', 'w') as output_file:
+	with open('textMaps/testMap1.txt', 'w') as output_file:
 		for row in base_map:
 			rowprint = ""
 			for c in row:

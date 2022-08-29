@@ -1,8 +1,8 @@
 from omg import *
-from maze import *
-from wad import *
+from mazeexplorer import *
 import numpy as np
 import cma
+import random
 
 # Global Variables
 WALL = 1
@@ -32,10 +32,11 @@ def create_map():
 	# TODO: create any type of maps
 	w = 10
 	h = 10
-	base_map = [[EMPTY for x in range(w)] for y in range(h)] 
+	base_map = [[EMPTY for r in range(w)] for c in range(h)] 
 	
-	# add border around the map
-	x = np.pad(x, pad_width=1, mode='constant', constant_values=WALL)
+	# TODO: add border around the map
+	base_map = np.pad(base_map, pad_width=1, mode='constant', constant_values=WALL)
+	print("==== Map with borders ====")
 	print_map(base_map)
 
 	nodes = []
@@ -56,32 +57,12 @@ def create_map():
 		#print(base_map[point[0]][point[1]])
 		base_map[point[0]][point[1]] = WALL
 	
-	# add a wall that goes up or right at these points
-	prob = 0.3
-	ct = 0
-	for point in wall_points:
-		print(nodes[ct])
-		if type(point[0]) == int and type(point[1]) == int:
-			probCompare = random.random()
-			if probCompare < prob:
-				# add wall that goes up
-				#print("Wall faces up")
-				nodes[ct].append("Up")
-				base_map[point[0]-1][point[1]] = WALL
-			elif probCompare > 0.3 and probCompare < 0.6:
-				# add wall that goes right
-				#print("Wall faces right")
-				nodes[ct].append("Right")
-				base_map[point[0]][point[1]+1] = WALL
-			else:
-				# add wall that goes diagonal Up
-				#print("Wall faces Diagonal")
-				nodes[ct].append("Diagonal Up")
-				base_map[point[0]+1][point[1]+1] = WALL
-		ct = ct + 1
-	#print(nodes)
+	# TODO: add a wall that goes up or right at these points
+	# wall representations: [x, y, height, direction (right, down)]
+	
 
 	# print map
+	print("==== Final Map ====")
 	print_map(base_map)
 
 	# save map as a .txt file
